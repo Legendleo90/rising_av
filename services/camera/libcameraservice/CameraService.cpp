@@ -152,9 +152,6 @@ const String16 CameraService::kWatchAllClientsFlag("all");
 // Set to keep track of logged service error events.
 static std::set<String8> sServiceErrorEventSet;
 
-// Current camera package name
-static std::string sCurrPackageName;
-
 CameraService::CameraService() :
         mEventLog(DEFAULT_EVENT_LOG_LENGTH),
         mNumberOfCameras(0),
@@ -959,10 +956,6 @@ Status CameraService::filterGetInfoErrorCode(status_t err) {
                     "Camera HAL encountered error %d: %s",
                     err, strerror(-err));
     }
-}
-
-std::string CameraService::getCurrPackageName() {
-    return sCurrPackageName;
 }
 
 Status CameraService::makeClient(const sp<CameraService>& cameraService,
@@ -1854,8 +1847,6 @@ Status CameraService::connectHelper(const sp<CALLBACK>& cameraCb, const String8&
     ALOGI("CameraService::connect call (PID %d \"%s\", camera ID %s) and "
             "Camera API version %d", packagePid, clientName8.string(), cameraId.string(),
             static_cast<int>(effectiveApiLevel));
-
-    sCurrPackageName = clientName8.string();
 
     nsecs_t openTimeNs = systemTime();
 
