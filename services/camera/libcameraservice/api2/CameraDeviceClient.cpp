@@ -106,17 +106,11 @@ CameraDeviceClient::CameraDeviceClient(const sp<CameraService>& cameraService,
     mRequestIdCounter(0),
     mPrivilegedClient(false),
     mOverrideForPerfClass(overrideForPerfClass) {
-    
+
     char value[PROPERTY_VALUE_MAX];
     property_get("persist.vendor.camera.privapp.list", value, "");
     String16 packagelist(value);
-    
-    char oemCameraPackage[PROPERTY_VALUE_MAX];
-    property_get("persist.sys.aux.camera_oem_package", oemCameraPackage, "");
-    String16 oemCameraPackageName(oemCameraPackage);
-    
-    if (packagelist.contains(clientPackageName.string())
-    	|| oemCameraPackageName.contains(clientPackageName.string())) {
+    if (packagelist.contains(clientPackageName.string())) {
         mPrivilegedClient = true;
     }
 
