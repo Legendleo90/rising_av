@@ -185,8 +185,9 @@ struct TestICameraProvider : virtual public provider::V2_5::ICameraProvider {
     using getCameraDeviceInterface_V1_x_cb = std::function<void(Status status,
             const sp<device::V1_0::ICameraDevice>& device)>;
     virtual hardware::Return<void> getCameraDeviceInterface_V1_x(
-            [[maybe_unused]] const hardware::hidl_string& cameraDeviceName,
+            const hardware::hidl_string& cameraDeviceName,
             getCameraDeviceInterface_V1_x_cb _hidl_cb) override {
+        (void) cameraDeviceName;
         _hidl_cb(Status::OK, nullptr); //TODO: impl. of ver. 1.0 device interface
                                        //      otherwise enumeration will fail.
         return hardware::Void();
@@ -260,8 +261,9 @@ struct TestInteractionProxy : public CameraProviderManager::HidlServiceInteracti
     virtual ~TestInteractionProxy() {}
 
     virtual bool registerForNotifications(
-            [[maybe_unused]] const std::string &serviceName,
+            const std::string &serviceName,
             const sp<hidl::manager::V1_0::IServiceNotification> &notification) override {
+        (void) serviceName;
         mManagerNotificationInterface = notification;
         return true;
     }

@@ -355,6 +355,8 @@ TEST(DistortionMapperTest, LargeTransform) {
 #include "DistortionMapperTest_OpenCvData.h"
 
 TEST(DistortionMapperTest, CompareToOpenCV) {
+    status_t res;
+
     float bigDistortion[] = {0.1, -0.003, 0.004, 0.02, 0.01};
 
     // Expect to match within sqrt(2) radius pixels
@@ -368,7 +370,7 @@ TEST(DistortionMapperTest, CompareToOpenCV) {
     using namespace openCvData;
 
     DistortionMapperInfo *mapperInfo = m.getMapperInfo();
-    m.mapRawToCorrected(rawCoords.data(), rawCoords.size() / 2, mapperInfo, /*clamp*/false,
+    res = m.mapRawToCorrected(rawCoords.data(), rawCoords.size() / 2, mapperInfo, /*clamp*/false,
             /*simple*/false);
 
     for (size_t i = 0; i < rawCoords.size(); i+=2) {
